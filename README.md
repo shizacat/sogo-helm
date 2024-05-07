@@ -1,0 +1,2 @@
+# Sogo Helm chart
+
