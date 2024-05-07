@@ -24,6 +24,9 @@ data:
             proxy_redirect off;
         }
 
+        location /SOGo.woa/WebServerResources/ {
+            alias /var/www/html/WebServerResources/;
+        }
         location /.woa/WebServerResources/ {
             alias /var/www/html/WebServerResources/;
         }
