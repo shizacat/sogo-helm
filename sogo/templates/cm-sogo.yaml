@@ -64,17 +64,17 @@ data:
       );
 
       /* Web Interface */
-      //SOGoPageTitle = SOGo;
-      //SOGoVacationEnabled = YES;
-      //SOGoForwardEnabled = YES;
-      //SOGoSieveScriptsEnabled = YES;
-      //SOGoMailAuxiliaryUserAccountsEnabled = YES;
-      //SOGoTrustProxyAuthentication = NO;
-      //SOGoXSRFValidationEnabled = YES;
+      SOGoPageTitle = {{ .Values.config.interface.page_title | quote }};
+      SOGoVacationEnabled = {{ if .Values.config.interface.vacation_enabled }}YES{{- else }}NO{{- end }};
+      SOGoForwardEnabled = {{ if .Values.config.interface.forward_enabled }}YES{{- else }}NO{{- end }};
+      SOGoSieveScriptsEnabled = {{ if .Values.config.interface.sieve_scripts_enabled }}YES{{- else }}NO{{- end }};
+      SOGoMailAuxiliaryUserAccountsEnabled = {{ if .Values.config.interface.mail_auxiliary_user_accounts_enabled }}YES{{- else }}NO{{- end }};
+      SOGoTrustProxyAuthentication = {{ if .Values.config.interface.trust_proxy_authentication }}YES{{- else }}NO{{- end }};
+      SOGoXSRFValidationEnabled = {{ if .Values.config.interface.xsrf_validation_enabled }}YES{{- else }}NO{{- end }};
 
-      /* General - SOGoTimeZone *MUST* be defined */
-      //SOGoLanguage = English;
-      //SOGoTimeZone = America/Montreal;
+      /* General */
+      SOGoLanguage = {{ .Values.config.general.language }};
+      SOGoTimeZone = {{ .Values.config.general.timezone }};
       //SOGoCalendarDefaultRoles = (
       //  PublicDAndTViewer,
       //  ConfidentialDAndTViewer

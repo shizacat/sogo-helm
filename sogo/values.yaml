@@ -98,6 +98,30 @@ config:
   # - id: ...
   #   type: sql
 
+  # General
+  general:
+    # SOGoLanguage
+    language: English
+    # SOGoTimeZone
+    timezone: America/Montreal
+  
+  # Web interface
+  interface:
+    # SOGoPageTitle = SOGo;
+    page_title: SOGo
+    # SOGoVacationEnabled
+    vacation_enabled: true
+    # SOGoForwardEnabled
+    forward_enabled: true
+    # SOGoSieveScriptsEnabled
+    sieve_scripts_enabled: true
+    # SOGoMailAuxiliaryUserAccountsEnabled
+    mail_auxiliary_user_accounts_enabled: true
+    # SOGoTrustProxyAuthentication
+    trust_proxy_authentication: false
+    # SOGoXSRFValidationEnabled
+    xsrf_validation_enabled: true
+
   # Debug
   debug:
     requests: false           # SOGoDebugRequests
