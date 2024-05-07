@@ -203,7 +203,7 @@ config_raw: |
     //  ConfidentialDAndTViewer
     //);
     //SOGoSuperUsernames = (sogo1, sogo2); // This is an array - keep the parens!
-    //SxVMemLimit = 384;
+    SxVMemLimit = 0;
     //WOPidFile = "/var/run/sogo/sogo.pid";
     //SOGoMemcachedHost = "/var/run/memcached.sock";
     
