@@ -1,0 +1,8 @@
+apiVersion: v2
+name: sogo
+description: SoGo - web interface for imap server.
+
+type: application
+
+version: 0.8.0
+appVersion: "5.8.4"
