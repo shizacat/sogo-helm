@@ -81,6 +81,34 @@ tolerations: []
 
 affinity: {}
 
+# Configuration
+# https://www.sogo.nu/files/docs/SOGoInstallationGuide.html
+
+config:
+  # If true, config will be taken from config_raw
+  use_raw: false
+
+  # Config database connect
+  # Example for mysql: mysql://sogo:sogo@127.0.0.1:3306/sogo
+  database_url: postgresql://sogo:sogo@localhost:5432/sogo
+
+  # SOGoUserSources
+  user_sources: []
+  # Example
+  # - id: ...
+  #   type: sql
+
+  # Debug
+  debug:
+    requests: false           # SOGoDebugRequests
+    base_url: false           # SoDebugBaseURL
+    imap: false               # ImapDebugEnabled
+    ldap: false               # LDAPDebugEnabled
+    pg: false                 # PGDebugEnabled
+    mysql4: false             # MySQL4DebugEnabled
+    ui_x: false               # SOGoUIxDebugEnabled
+    dont_zip_response: false  # WODontZipResponse
+
 config_raw: |
   {
     /* *********************  Main SOGo configuration file  **********************

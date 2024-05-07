@@ -33,18 +33,31 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - "-WONoDetach"
+            - "YES"
+            - "-WOPidFile"
+            - "/var/run/sogo/sogo.pid"
+            - "-WOPort"
+            - "0.0.0.0:20000"
+            # Logs to stdout
+            - "-WOLogFile"
+            - "-"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/sogo/
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 20000
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -59,3 +72,7 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "sogo.fullname" . }}-conf

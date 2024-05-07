@@ -6,4 +6,108 @@ metadata:
     {{- include "sogo.labels" . | nindent 4 }}
 data:
   sogo.conf: |
+  {{- if .Values.config.use_raw -}}
     {{- .Values.config_raw | nindent 4 }}
+  {{- else }}
+    {
+      /* *********************  Main SOGo configuration file  **********************
+      *                                                                           *
+      * Since the content of this file is a dictionary in OpenStep plist format,  *
+      * the curly braces enclosing the body of the configuration are mandatory.   *
+      * See the Installation Guide for details on the format.                     *
+      *                                                                           *
+      * C and C++ style comments are supported.                                   *
+      *                                                                           *
+      * This example configuration contains only a subset of all available        *
+      * configuration parameters. Please see the installation guide more details. *
+      *                                                                           *
+      * ~sogo/GNUstep/Defaults/.GNUstepDefaults has precedence over this file,    *
+      * make sure to move it away to avoid unwanted parameter overrides.          *
+      *                                                                           *
+      * **************************************************************************/
+
+      /* Database configuration (mysql://, postgresql:// or oracle://) */
+      SOGoProfileURL = "{{ .Values.config.database_url }}/sogo_user_profile";
+      OCSFolderInfoURL = "{{ .Values.config.database_url }}/sogo_folder_info";
+      OCSSessionsFolderURL = "{{ .Values.config.database_url }}/sogo_sessions_folder";
+
+      /* Mail */
+      //SOGoDraftsFolderName = Drafts;
+      //SOGoSentFolderName = Sent;
+      //SOGoTrashFolderName = Trash;
+      //SOGoJunkFolderName = Junk;
+      //SOGoIMAPServer = "localhost";
+      //SOGoSieveServer = "sieve://127.0.0.1:4190";
+      //SOGoSMTPServer = "smtp://127.0.0.1";
+      //SOGoMailDomain = acme.com;
+      //SOGoMailingMechanism = smtp;
+      //SOGoForceExternalLoginWithEmail = NO;
+      //SOGoMailSpoolPath = /var/spool/sogo;
+      //NGImap4ConnectionStringSeparator = "/";
+
+      /* Notifications */
+      //SOGoAppointmentSendEMailNotifications = NO;
+      //SOGoACLsSendEMailNotifications = NO;
+      //SOGoFoldersSendEMailNotifications = NO;
+
+      /* Authentication */
+      //SOGoPasswordChangeEnabled = YES;
+
+      SOGoUserSources = (
+      {{- range .Values.config.user_sources }}
+        {
+        {{- range $key, $value := . }}
+          {{ $key }} = {{ $value | quote }};
+        {{- end }}
+        }
+      {{- end }}
+      );
+
+      /* Web Interface */
+      //SOGoPageTitle = SOGo;
+      //SOGoVacationEnabled = YES;
+      //SOGoForwardEnabled = YES;
+      //SOGoSieveScriptsEnabled = YES;
+      //SOGoMailAuxiliaryUserAccountsEnabled = YES;
+      //SOGoTrustProxyAuthentication = NO;
+      //SOGoXSRFValidationEnabled = YES;
+
+      /* General - SOGoTimeZone *MUST* be defined */
+      //SOGoLanguage = English;
+      //SOGoTimeZone = America/Montreal;
+      //SOGoCalendarDefaultRoles = (
+      //  PublicDAndTViewer,
+      //  ConfidentialDAndTViewer
+      //);
+      //SOGoSuperUsernames = (sogo1, sogo2); // This is an array - keep the parens!
+      SxVMemLimit = 0;
+      //WOPidFile = "/var/run/sogo/sogo.pid";
+      //SOGoMemcachedHost = "/var/run/memcached.sock";
+      
+      /* Debug */
+      {{- if .Values.config.debug.requests }}
+      SOGoDebugRequests = YES;
+      {{- end -}}
+      {{ if .Values.config.debug.base_url }}
+      SoDebugBaseURL = YES;
+      {{- end -}}
+      {{ if .Values.config.debug.imap }}
+      ImapDebugEnabled = YES;
+      {{- end -}}
+      {{ if .Values.config.debug.ldap }}
+      LDAPDebugEnabled = YES;
+      {{- end -}}
+      {{ if .Values.config.debug.pg }}
+      PGDebugEnabled = YES;
+      {{- end -}}
+      {{ if .Values.config.debug.mysql4 }}
+      MySQL4DebugEnabled = YES;
+      {{- end -}}
+      {{ if .Values.config.debug.ui_x }}
+      SOGoUIxDebugEnabled = YES;
+      {{- end -}}
+      {{ if .Values.config.debug.dont_zip_response }}
+      WODontZipResponse = YES;
+      {{- end }}
+    }
+  {{- end -}}
