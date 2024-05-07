@@ -98,6 +98,19 @@ config:
   # - id: ...
   #   type: sql
 
+  # Mail
+  mail:
+    # SOGoDraftsFolderName = Drafts;
+    drafts_folder_name: "Drafts"
+    # SOGoSentFolderName
+    sent_folder_name: "Sent"
+    # SOGoTrashFolderName
+    trash_folder_name: "Trash"
+    # SOGoJunkFolderName
+    junk_folder_name: "Junk"
+    # SOGoIMAPServer
+    imap_server: "localhost"
+
   # General
   general:
     # SOGoLanguage

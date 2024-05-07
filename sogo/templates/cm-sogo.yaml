@@ -32,11 +32,13 @@ data:
       OCSSessionsFolderURL = "{{ .Values.config.database_url }}/sogo_sessions_folder";
 
       /* Mail */
-      //SOGoDraftsFolderName = Drafts;
-      //SOGoSentFolderName = Sent;
-      //SOGoTrashFolderName = Trash;
-      //SOGoJunkFolderName = Junk;
-      //SOGoIMAPServer = "localhost";
+      SOGoDraftsFolderName = {{ .Values.config.mail.drafts_folder_name }};
+      SOGoSentFolderName = {{ .Values.config.mail.sent_folder_name }};
+      SOGoTrashFolderName = {{ .Values.config.mail.trash_folder_name }};
+      SOGoJunkFolderName = {{ .Values.config.mail.junk_folder_name }};
+      {{- if .Values.config.mail.imap_server }}
+      SOGoIMAPServer = {{ .Values.config.mail.imap_server | quote }};
+      {{- end }}
       //SOGoSieveServer = "sieve://127.0.0.1:4190";
       //SOGoSMTPServer = "smtp://127.0.0.1";
       //SOGoMailDomain = acme.com;
