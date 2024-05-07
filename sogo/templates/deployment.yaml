@@ -27,6 +27,17 @@ spec:
       serviceAccountName: {{ include "sogo.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: init-static
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          volumeMounts:
+            - name: static-data
+              mountPath: /var/www/html
+          command:
+            - "sh"
+            - "-c"
+            - "cp -r /usr/lib/GNUstep/SOGo/WebServerResources/ /var/www/html;"
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -60,6 +71,19 @@ spec:
           #     port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+        - name: nginx
+          image: nginx:1.26-alpine
+          ports:
+            - name: http-nginx
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: static-data
+              mountPath: /var/www/html
+              readOnly: true
+            - name: nginx-conf
+              mountPath: /etc/nginx/conf.d/
+              readOnly: true
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -76,3 +100,8 @@ spec:
         - name: config-volume
           configMap:
             name: {{ include "sogo.fullname" . }}-conf
+        - name: static-data
+          emptyDir: {}
+        - name: nginx-conf
+          configMap:
+            name: {{ include "sogo.fullname" . }}-nginx-conf

@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "sogo.fullname" . }}-nginx-conf
+  labels:
+    {{- include "sogo.labels" . | nindent 4 }}
+data:
+  default.conf: |
+    server {
+        listen 80;
+        server_name localhost;
+
+        client_max_body_size 32m;
+
+        proxy_connect_timeout       300;
+        proxy_send_timeout          300;
+        proxy_read_timeout          300;
+        send_timeout                300;
+
+        location / {
+            proxy_pass http://127.0.0.1:20000;
+            proxy_set_header Host $host;
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+            proxy_redirect off;
+        }
+
+        location /.woa/WebServerResources/ {
+            alias /var/www/html/WebServerResources/;
+        }
+    }
