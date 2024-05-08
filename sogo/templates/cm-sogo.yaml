@@ -94,7 +94,15 @@ data:
       //SOGoSuperUsernames = (sogo1, sogo2); // This is an array - keep the parens!
       SxVMemLimit = 0;
       //WOPidFile = "/var/run/sogo/sogo.pid";
-      //SOGoMemcachedHost = "/var/run/memcached.sock";
+      WOWorkersCount = {{ .Values.config.general.workers_count }};}
+
+      {{ if .Values.config.memcached_host }}
+      SOGoMemcachedHost = {{ .Values.config.memcached_host }};
+      {{- else -}}
+      {{- if .Values.memcached.enabled -}}
+      SOGoMemcachedHost = {{ .Release.Name }}-memcached;
+      {{- end -}}
+      {{- end }}
       
       /* Debug */
       {{- if .Values.config.debug.requests }}

@@ -92,6 +92,11 @@ config:
   # Example for mysql: mysql://sogo:sogo@127.0.0.1:3306/sogo
   database_url: postgresql://sogo:sogo@localhost:5432/sogo
 
+  # Memcached
+  # SOGoMemcachedHost
+  # If memcached.enabled is True, the host will be take from it
+  memcached_host: ""
+
   # SOGoUserSources
   user_sources: []
   # Example
@@ -131,6 +136,8 @@ config:
     language: English
     # SOGoTimeZone
     timezone: America/Montreal
+    # WOWorkersCount
+    workers_count: 3
   
   # Web interface
   interface:
@@ -297,3 +304,8 @@ config_raw: |
     //WODontZipResponse = YES;
     //WOLogFile = /var/log/sogo/sogo.log;
   }
+
+# Install memcached
+# https://github.com/bitnami/charts/tree/main/bitnami/memcached
+memcached:
+  enabled: false

@@ -6,3 +6,9 @@ type: application
 
 version: 0.8.0
 appVersion: "5.8.4"
+
+dependencies:
+  - name: memcached
+    version: "7.0.4"  # Application version 1.6.27
+    repository: "oci://registry-1.docker.io/bitnamicharts"
+    condition: memcached.enabled
