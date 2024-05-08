@@ -129,5 +129,10 @@ data:
       {{ if .Values.config.debug.dont_zip_response }}
       WODontZipResponse = YES;
       {{- end }}
+
+      /* Extra */
+      {{ range $key, $value := .Values.config.extra }}
+      {{ $key }} = {{ $value | quote }};
+      {{ end }}
     }
   {{- end -}}

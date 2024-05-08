@@ -167,6 +167,9 @@ config:
     ui_x: false               # SOGoUIxDebugEnabled
     dont_zip_response: false  # WODontZipResponse
 
+  # Extra config
+  extra: {}
+
 config_raw: |
   {
     /* *********************  Main SOGo configuration file  **********************
