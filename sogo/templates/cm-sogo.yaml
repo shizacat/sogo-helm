@@ -38,14 +38,24 @@ data:
       SOGoJunkFolderName = {{ .Values.config.mail.junk_folder_name }};
       {{- if .Values.config.mail.imap_server }}
       SOGoIMAPServer = {{ .Values.config.mail.imap_server | quote }};
-      {{- end }}
-      //SOGoSieveServer = "sieve://127.0.0.1:4190";
-      //SOGoSMTPServer = "smtp://127.0.0.1";
-      //SOGoMailDomain = acme.com;
-      //SOGoMailingMechanism = smtp;
-      //SOGoForceExternalLoginWithEmail = NO;
-      //SOGoMailSpoolPath = /var/spool/sogo;
-      //NGImap4ConnectionStringSeparator = "/";
+      {{ end -}}
+      {{- if .Values.config.mail.sieve_server }}
+      SOGoSieveServer = {{ .Values.config.mail.sieve_server | quote }};
+      {{ end -}}
+      {{- if .Values.config.mail.smtp_server }}
+      SOGoSMTPServer = {{ .Values.config.mail.smtp_server | quote }};
+      {{ end -}}
+      {{- if .Values.config.mail.mail_domain }}
+      SOGoMailDomain = {{ .Values.config.mail.mail_domain | quote }};
+      {{ end -}}
+      {{- if .Values.config.mail.mailing_mechanism }}
+      SOGoMailingMechanism = {{ .Values.config.mail.mailing_mechanism | quote }};
+      {{ end -}}
+      SOGoForceExternalLoginWithEmail = {{ if .Values.config.mail.force_external_login_with_email }}YES{{- else }}NO{{ end -}};
+      {{- if .Values.config.mail.mail_spool_path }}
+      SOGoMailSpoolPath = {{ .Values.config.mail.mail_spool_path | quote }};
+      {{ end }}
+      NGImap4ConnectionStringSeparator = {{ .Values.config.mail.imap4_connection_string_separator | quote }};
 
       /* Notifications */
       //SOGoAppointmentSendEMailNotifications = NO;

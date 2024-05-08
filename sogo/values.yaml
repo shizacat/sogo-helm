@@ -108,8 +108,22 @@ config:
     trash_folder_name: "Trash"
     # SOGoJunkFolderName
     junk_folder_name: "Junk"
-    # SOGoIMAPServer
+    # SOGoIMAPServer = "localhost"
     imap_server: "localhost"
+    # SOGoSieveServer = "sieve://127.0.0.1:4190"
+    sieve_server: ""
+    # SOGoSMTPServer = "smtp://127.0.0.1"
+    smtp_server: ""
+    # SOGoMailDomain = acme.com
+    mail_domain: ""
+    # SOGoMailingMechanism = smtp
+    mailing_mechanism: smtp
+    # SOGoForceExternalLoginWithEmail = NO
+    force_external_login_with_email: false
+    # SOGoMailSpoolPath = /var/spool/sogo
+    mail_spool_path: ""
+    # NGImap4ConnectionStringSeparator
+    imap4_connection_string_separator: "/"
 
   # General
   general:
